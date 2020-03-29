@@ -14,7 +14,7 @@ const app = express();
 const root = path.join(__dirname +'./index.html')
 
  var corsOptions ={
-  origin:'http://localhost:8080',
+  origin:'http://localhost:1337',
      credentials: true
 };
 
@@ -40,6 +40,6 @@ app.use()
      res.sendFile('index.html', { root })
  });
 
-app.listen(8080,() => {
-    console.log('8080 is ready')
+app.listen(1337,() => {
+    console.log('1337 is ready')
 });
