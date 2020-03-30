@@ -6,15 +6,13 @@ const cors = require('cors');
 const bodyParser = require("body-parser");
 const cookieParser = require('cookie-parser');
 const busboy = require("then-busboy");
-
-const upload = require('/upload');
-const login = require('/login');
+require('./routes/upload');
+require('./routes/login');
 
 const app = express();
-const root = path.join(__dirname +'./index.html')
-
- var corsOptions ={
-  origin:'http://localhost:1337',
+const root = path.join(__dirname,'../front');
+var corsOptions ={
+  origin:'http://localhost:8080',
      credentials: true
 };
 
@@ -27,19 +25,14 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use (express.static(root));
 app.use('/uploads',express.static(path.join(__dirname,'uploads')));
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-
-app.use(upload);
-app.use()
-
-
-//in general fall back
   app.get('/',(req, res) => {
      res.sendFile('index.html', { root })
  });
 
-app.listen(1337,() => {
-    console.log('1337 is ready')
+app.listen(8080,() => {
+    console.log('8080 is ready')
 });

@@ -1,14 +1,14 @@
 const express = require('express');
 const mysql = require('mysql');
-const expressValidator = require("express-validator");
+//const expressValidator = require("express-validator");
 const cookieParser = require('cookie-parser');
 const bodyParser = require("body-parser");
 const jwt = require('jsonwebtoken');
 const router = express.Router();
 const fs = require('fs');
-var _ = require('underscore');
-var youtube = require('../library/googleyoutube');
-var youtube = new youtube();
+//var _ = require('underscore');
+//var youtube = require('../library/googleyoutube');
+//var youtube = new youtube();
 
 // create jwt token to be used as object 
 let userToken = {};
@@ -44,7 +44,7 @@ const decodeToken = (token, callback) => {
 router.use(cookieParser());
 router.use(bodyParser.urlencoded({ extended: true }));
 router.use(bodyParser.json());
-router.use(expressValidator());
+//router.use(expressValidator());
 
 //check if email exists in db
 router.post('/trainers/email', (req, res, next) => {
@@ -66,23 +66,23 @@ router.post('/trainers/email', (req, res, next) => {
 })
 
 //validate user before login
-const validateUser = (req, res, next) => {
-    var passre = "(?=[^A-Z]*[A-Z])(?=[^a-z]*[a-z])(?=[^0-9]*[0-9]).{8,}";
-    req.checkBody('email', 'email is required').notEmpty();
-    req.checkBody('password', 'password is required').notEmpty();
-    req.checkBody('password', 'Password must be minimum eight to ten characters, at least one capital letter,one lowercase letter and one number.')
-        .matches(passre);
-    var errors = req.validationErrors();
-    if (errors) {
-        var response = { errors: [] };
-        errors.forEach((err) => {
-            response.errors.push(err.msg);
-        });
-        res.statusCode = 400;
-        return res.json(response);
-    }
-    return next();
-}
+//const validateUser = (req, res, next) => {
+  //  var passre = "(?=[^A-Z]*[A-Z])(?=[^a-z]*[a-z])(?=[^0-9]*[0-9]).{8,}";
+    //req.checkBody('email', 'email is required').notEmpty();
+    //req.checkBody('password', 'password is required').notEmpty();
+    //req.checkBody('password', 'Password must be minimum eight to ten characters, at least one capital letter,one lowercase letter and one number.')
+      //  .matches(passre);
+    //var errors = req.validationErrors();
+    //if (errors) {
+      //  var response = { errors: [] };
+       // errors.forEach((err) => {
+        //    response.errors.push(err.msg);
+       // });
+        //res.statusCode = 400;
+       // return res.json(response);
+  //  }
+    //return next();
+//}
 //validate user before register 
 const validateNewUser = (req, res, next) => {
     var namere = "[a-zA-Z]*";
@@ -107,7 +107,7 @@ const validateNewUser = (req, res, next) => {
 }
 
 //register new user , put payload in cookie
-router.post('/register', validateNewUser, (req, res) => {
+router.post('/register',  (req, res) => {
     var post = {
        first_name: req.body.first_name,lastname:req.body.lastname, email: req.body.email, password: req.body.password
             }
@@ -125,7 +125,7 @@ router.post('/register', validateNewUser, (req, res) => {
 
 
 //user login
-router.post('/login', validateUser, (req, res) => {
+router.post('/login', (req, res) => {
     //prevent sql injection 
     var sql = "SELECT * FROM ?? WHERE ?? = ? and ?? =?  ";
     var email = req.body.email;
