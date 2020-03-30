@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+
+    <title>Upload video</title>
+  </head>
+  <body>
+    <div class=" container-fluid ">
+      <form class=" mx-auto col-6 border m-3 p-2">
+        <h1>Video Upload</h1>
+        <div class="form-group">
+          <label for="video-url">Video ID</label>
+          <input type="text" class="form-control" id="video-url" />
+          <small id="emailHelp" class="form-text "
+            >example: https://www.youtube.com/watch?v=<span class="bg-warning"
+              >C_9HNEyLa4U</span
+            ></small
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="form-check">Equipment</label>
+          <div class="form-check ">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="equipment"
+              id="No"
+              value="no equipment"
+            />
+            <label class="form-check-label" for="no">No Equipment</label>
+          </div>
+          <div class="form-check ">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="equipment"
+              id="mat"
+              value="mat"
+            />
+            <label class="form-check-label" for="mat">Mat</label>
+          </div>
+          <div class="form-check ">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="equipment"
+              id="dumbbell"
+              value="dumbbell"
+            />
+            <label class="form-check-label" for="dumbbell">Dumbbell</label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="video-type">Workout type</label>
+          <select class="form-control w-25" id="video-url">
+            <option>Yoga</option>
+            <option>Hiit</option>
+            <option>Pilates</option>
+            <option>Cardio</option>
+            <option>Strength</option>
+            <option>Toning </option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn btn-secondary">Submit</button>
+      </form>
+    </div>
+    <div class="border container mx-auto text-center m-2 p-2">
+      <h3>DB Structure</h3>
+      <b> videos db : </b>videoUrl(KEY) ,userId(KEY), videoType, equipment,
+      duration
+    </div>
+    <div class="row container mx-auto my-3">
+      <button
+        class="col-sm btn btn-outline-info mx-2"
+        id="yoga"
+        onclick="getVideos(this.id)"
+      >
+        Yoga
+      </button>
+      <button
+        class="col-sm btn btn-outline-info mx-2"
+        id="hit"
+        onclick="getVideos(this.id)"
+      >
+        HIIT
+      </button>
+      <button
+        class="col-sm btn btn-outline-info mx-2"
+        id="pilates"
+        onclick="getVideos(this.id)"
+      >
+        Pilates
+      </button>
+      <button
+        class="col-sm btn btn-outline-info mx-2"
+        id="cardio"
+        onclick="getVideos(this.id)"
+      >
+        Cardio
+      </button>
+      <button
+        class="col-sm btn btn-outline-info mx-2"
+        id="toning"
+        onclick="getVideos(this.id);"
+      >
+        Toning
+      </button>
+      <button
+        class="col-sm btn btn-outline-info mx-2"
+        id="strength"
+        onclick="getVideos(this.id)"
+      >
+        Strength
+      </button>
+    </div>
+    <div class="row container mx-auto training"></div>
+    <script type="text/javascript" src="index.js"></script>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+      integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+      integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

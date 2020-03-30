@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: מרץ 30, 2020 בזמן 12:15 AM
+-- Generation Time: מרץ 30, 2020 בזמן 09:24 PM
 -- גרסת שרת: 10.4.11-MariaDB
 -- PHP Version: 7.4.3
 
@@ -25,37 +25,16 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- מבנה טבלה עבור טבלה `trainers`
---
-
-CREATE TABLE `trainers` (
-  `first_name` varchar(20) NOT NULL,
-  `lastname` varchar(20) NOT NULL,
-  `password` varchar(20) NOT NULL,
-  `email` varchar(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- הוצאת מידע עבור טבלה `trainers`
---
-
-INSERT INTO `trainers` (`first_name`, `lastname`, `password`, `email`) VALUES
-('', '', '', '');
-
--- --------------------------------------------------------
-
---
 -- מבנה טבלה עבור טבלה `users`
 --
 
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `username` varchar(20) NOT NULL,
-  `password` int(11) NOT NULL,
-  `email` varchar(20) NOT NULL,
-  `country` varchar(20) NOT NULL,
-  `role` varchar(10) NOT NULL,
-  `creditcard` varchar(20) DEFAULT NULL
+  `brand` varchar(20) NOT NULL,
+  `video_url` varchar(250) NOT NULL,
+  `rating` varchar(10) NOT NULL,
+  `tag_workout_type` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -65,9 +44,13 @@ CREATE TABLE `users` (
 --
 
 CREATE TABLE `videos` (
+  `id` int(11) NOT NULL,
+  `brand` varchar(20) DEFAULT NULL,
   `video_url` varchar(20) NOT NULL,
-  `type_workout` varchar(20) NOT NULL,
-  `trainer_email` varchar(20) NOT NULL
+  `youtube_image` varchar(250) DEFAULT NULL,
+  `workout_duration` varchar(11) NOT NULL,
+  `training_type` varchar(20) NOT NULL,
+  `equipment` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -80,15 +63,19 @@ CREATE TABLE `videos` (
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `user_name` (`username`),
-  ADD UNIQUE KEY `user_password` (`password`),
-  ADD UNIQUE KEY `user_email` (`email`),
-  ADD KEY `user_country` (`country`);
+  ADD KEY `brand` (`brand`),
+  ADD KEY `video_url` (`video_url`),
+  ADD KEY `tag_workout_type` (`tag_workout_type`),
+  ADD KEY `tag_workout_type_2` (`tag_workout_type`);
 
 --
 -- אינדקסים לטבלה `videos`
 --
 ALTER TABLE `videos`
-  ADD UNIQUE KEY `trainer_email` (`trainer_email`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `video_url` (`video_url`),
+  ADD KEY `equipment` (`equipment`),
+  ADD KEY `training_type` (`training_type`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -98,6 +85,12 @@ ALTER TABLE `videos`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `videos`
+--
+ALTER TABLE `videos`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
