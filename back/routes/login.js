@@ -6,6 +6,7 @@ const bodyParser = require("body-parser");
 const jwt = require('jsonwebtoken');
 const router = express.Router();
 const fs = require('fs');
+const upload = require('./upload');
 
 // create jwt token to be used as object 
 let userToken = {};
@@ -42,6 +43,7 @@ router.use(cookieParser());
 router.use(bodyParser.urlencoded({ extended: true }));
 router.use(bodyParser.json());
 //router.use(expressValidator());
+router.use(upload);
 
 //check if url exists in db
 router.post('/videos/url', (req, res, next) => {
@@ -71,7 +73,7 @@ router.post('/videoupload', (req, res) => {
         type: req.body.type,
         duration: req.body.duration,
         url: req.body.url,
-        img: req.body, img
+        img: req.body.img
     }
            //prevent sql injection 
     conn.query(`INSERT INTO videos SET ?`, post, (err, data) => {
