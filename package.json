@@ -13,23 +13,24 @@
   "author": "shainacarlebach",
   "license": "ISC",
   "dependencies": {
-    "@azure/event-hubs": "^5.0.0-preview.5",
-    "@azure/keyvault-keys": "^4.0.0",
-    "@azure/keyvault-secrets": "^4.0.0",
-    "@azure/storage-blob": "^12.0.0",
-    "@azure/storage-file-share": "^12.0.0-preview.6",
-    "@azure/storage-queue": "^12.0.0",
     "body-parser": "^1.19.0",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
-    "credit-card-regex": "^3.0.0",
     "express": "^4.17.1",
     "express-session": "^1.17.0",
     "express-validator": "^6.4.0",
+    "google-auth-library": "^6.0.0",
+    "googleapis": "^48.0.0",
+    "jquery": "^3.4.1",
     "jsonwebtoken": "^8.5.1",
+    "morgan": "^1.10.0",
     "multer": "^1.4.2",
     "mysql": "^2.18.1",
+    "nconf": "^0.10.0",
+    "nodemon": "^2.0.2",
+    "open": "^7.0.3",
     "serve-index": "^1.9.1",
-    "then-busboy": "^4.4.0"
+    "then-busboy": "^4.4.0",
+    "uuid": "^7.0.2"
   }
 }

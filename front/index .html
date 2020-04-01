@@ -19,11 +19,13 @@
   </head>
   <body>
     <div class=" container-fluid ">
-      <form class=" mx-auto col-6 border m-3 p-2">
+      <form class=" mx-auto col-6 border m-3 p-2" id="uploadForm" enctype = "multipart/form-data" action="videoupload"
+      method= "post">
         <h1>Video Upload</h1>
         <div class="form-group">
           <label for="video-url">Video ID</label>
           <input type="text" class="form-control" id="video-url" />
+             
           <small id="emailHelp" class="form-text "
             >example: https://www.youtube.com/watch?v=<span class="bg-warning"
               >C_9HNEyLa4U</span

@@ -10,6 +10,7 @@ const upload =require('./routes/upload');
 const login= require('./routes/login');
 
 const app = express();
+app.use(express.json());
 const root = path.join(__dirname,'../front');
 var corsOptions ={
   origin:'http://localhost:8080',

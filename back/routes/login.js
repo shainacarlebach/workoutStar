@@ -1,14 +1,11 @@
 const express = require('express');
 const mysql = require('mysql');
-//const expressValidator = require("express-validator");
+const { check, validationResult } = require("express-validator");
 const cookieParser = require('cookie-parser');
 const bodyParser = require("body-parser");
 const jwt = require('jsonwebtoken');
 const router = express.Router();
 const fs = require('fs');
-//var _ = require('underscore');
-//var youtube = require('../library/googleyoutube');
-//var youtube = new youtube();
 
 // create jwt token to be used as object 
 let userToken = {};
@@ -46,10 +43,10 @@ router.use(bodyParser.urlencoded({ extended: true }));
 router.use(bodyParser.json());
 //router.use(expressValidator());
 
-//check if email exists in db
-router.post('/trainers/email', (req, res, next) => {
+//check if url exists in db
+router.post('/videos/url', (req, res, next) => {
     //prevent sql injection 
-    var sql = 'SELECT email FROM trainers where email =' + conn.escape(req.body.email);
+    var sql = 'SELECT url FROM videos where url =' + conn.escape(req.body.url);
     conn.query(sql, (err, rows) => {
         if (rows.length > 0) {
             if (err) {
@@ -65,72 +62,59 @@ router.post('/trainers/email', (req, res, next) => {
     })
 })
 
-//validate user before login
-//const validateUser = (req, res, next) => {
-  //  var passre = "(?=[^A-Z]*[A-Z])(?=[^a-z]*[a-z])(?=[^0-9]*[0-9]).{8,}";
-    //req.checkBody('email', 'email is required').notEmpty();
-    //req.checkBody('password', 'password is required').notEmpty();
-    //req.checkBody('password', 'Password must be minimum eight to ten characters, at least one capital letter,one lowercase letter and one number.')
-      //  .matches(passre);
-    //var errors = req.validationErrors();
-    //if (errors) {
-      //  var response = { errors: [] };
-       // errors.forEach((err) => {
-        //    response.errors.push(err.msg);
-       // });
-        //res.statusCode = 400;
-       // return res.json(response);
-  //  }
-    //return next();
-//}
-//validate user before register 
-const validateNewUser = (req, res, next) => {
-    var namere = "[a-zA-Z]*";
-    req.checkBody('first_name', 'first_name is required').notEmpty();
-    req.checkBody('first_name', 'firstname must be alpahanumeric characters only').matches(namere);
-    req.checkBody('lastname', 'lastname is required').notEmpty();
-    req.checkBody('lastname', 'lastname must be alpahanumeric characters only').matches(namere);
-    req.checkBody('email', 'email is required').notEmpty();
-    req.checkBody('email', 'email must contain an @ character').isEmail();
-    req.checkBody('password', 'password is required').notEmpty();
-    
-    var errors = req.validationErrors();
-    if (errors) {
-        var response = { errors: [] };
-        errors.forEach((err) => {
-            response.errors.push(err.msg);
-        });
-        res.statusCode = 400;
-        return res.json(response);
-    }
-    return next();
-}
-
-//register new user , put payload in cookie
-router.post('/register',  (req, res) => {
+//register new video , put payload in cookie
+router.post('/videoupload', (req, res) => {
     var post = {
-       first_name: req.body.first_name,lastname:req.body.lastname, email: req.body.email, password: req.body.password
-            }
-    //prevent sql injection 
-    conn.query(`INSERT INTO trainers SET ?`, post, (err, data) => {
+        id: req.body.id,
+        title: req.body.title,
+        equipment: req.body.equipment,
+        type: req.body.type,
+        duration: req.body.duration,
+        url: req.body.url,
+        img: req.body, img
+    }
+           //prevent sql injection 
+    conn.query(`INSERT INTO videos SET ?`, post, (err, data) => {
         if (err) {
             console.log(err);
-            res.status(500).send({ success: false, msg: 'User was not created' });
+            res.status(500).send({ success: false, msg: 'video was not created' });
         } else {
-            res.cookie('tokenid', createToken({ username: req.body.username, createdAt: new Date() }), { maxAge: 86400 * 1000 });
+            res.cookie('tokenid', createToken({ id: req.body.id, createdAt: new Date() }), { maxAge: 86400 * 1000 });
             res.send({ success: true, redirectToUrl: '/index.html' });
         }
     });
 })
 
 
+//register new user , put payload in cookie
+router.post('/user', (req, res) => {
+    var post = {
+        id: req.body.id,
+        username: req.body.username,
+        type:req.body.type,
+        url:req.body.url,
+        rating: req.body.rating,
+        tag_workout_type: req.body.tag_workout_type
+           }
+           //prevent sql injection 
+    conn.query(`INSERT INTO users SET ?`, post, (err, data) => {
+        if (err) {
+            console.log(err);
+            res.status(500).send({ success: false, msg: 'user was not created' });
+        } else {
+            res.cookie('tokenid', createToken({ id: req.body.id, createdAt: new Date() }), { maxAge: 86400 * 1000 });
+            res.send({ success: true, redirectToUrl: '/index.html' });
+        }
+    });
+})
+
 //user login
 router.post('/login', (req, res) => {
     //prevent sql injection 
     var sql = "SELECT * FROM ?? WHERE ?? = ? and ?? =?  ";
-    var email = req.body.email;
-    var password = req.body.password;
-    var inserts = ['trainers', 'email', email, 'password', password]
+    var username = req.body.username;
+    var type = req.body.type;
+    var inserts = ['users', 'username', username, 'type',type]
     sql = mysql.format(sql, inserts)
     conn.query(sql, (err, rows) => {
         if (err) {
@@ -142,11 +126,11 @@ router.post('/login', (req, res) => {
             var isAuthenticated = rows.length > 0;
             if (isAuthenticated) {
                 const data = JSON.stringify(rows);
-                   res.cookie('tokenid', createToken({ email: rows[0].email }), { maxAge: 86400 * 1000 })
-                    console.log(createToken({ email: rows[0].email }), { maxAge: 86400 * 1000 });
-                    res.status(200).send({ success: true, role: rows[0].role, toUrl: '/index.html' });
-                }
-                 else {
+                res.cookie('tokenid', createToken({ username: rows[0].username }), { maxAge: 86400 * 1000 })
+                console.log(createToken({ username: rows[0].username }), { maxAge: 86400 * 1000 });
+                res.status(200).send({ success: true,toUrl: '/index.html' });
+            }
+            else {
                 return res.status(401).send({ success: false, msg: 'User not found, please register first !' })
 
             }
@@ -155,19 +139,38 @@ router.post('/login', (req, res) => {
     });
 
 })
+//get video by filter
+router.post('/filtervideo',(req,res)=>{
+    //prevent sql injection 
+    var sql = "SELECT * FROM ?? WHERE ?? = ? , ??=? and ?? =?  ";
+    var equipment= req.body.equipment;
+    var type= req.body.type;
+    var duration =req.body.duration;
+    var inserts = ['videos', 'equipment', equipment, 'type',type, 'duration', duration]
+    sql = mysql.format(sql, inserts)
+    conn.query(sql, (err, rows) => {
+        if (err) {
+            console.log(err);
+            res.send(err);
+        } else {}
+            console.log(rows);
+            res.send(JSON.stringify(rows));
+
+})
+})
 
 //router middleware to verify and create token 
 router.use((req, res, next) => {
-    let email = '';
-    userToken.email = '';
+    let username = '';
+    userToken.username = '';
     if (req.cookies.tokenid) {
         decodeToken(req.cookies.tokenid, (err, decoded) => {
             if (err) {
                 console.log(err)
             } else {
-                userToken.email = decoded.email;
+                userToken.username = decoded.username;
                 userToken.createdAt = decoded.createdAt;
-                userMail = userToken.email;
+                userMail = userToken.username;
                 res.cookie('tokenid', req.cookies.tokenid, { maxAge: 86400 * 1000 })
             }
         });
@@ -176,8 +179,8 @@ router.use((req, res, next) => {
 });
 
 
-router.use(['/trainers'], (req, res, next) => {
-    if (!userToken.email) {
+router.use(['/users'], (req, res, next) => {
+    if (!userToken.username) {
         res.redirect('/login');
         return;
     }
@@ -185,21 +188,21 @@ router.use(['/trainers'], (req, res, next) => {
 });
 
 router.use((req, res, next) => {
-    userMail = userToken.email;
+    userName = userToken.username;
     next();
 });
 
 //get user details
-router.get('/trainer', (req, res) => {
-    var sql = 'SELECT * FROM trainers WHERE email =' + conn.escape(userMail);
+router.get('/user', (req, res) => {
+    var sql = 'SELECT * FROM users WHERE username =' + conn.escape(userName);
     conn.query(sql, (err, rows) => {
-        if (err || !rows[0].email) {
+        if (err || !rows[0].username) {
             console.log(err);
             res.status(500).send(err);
         }
         else {
             let user = rows[0];
-            delete user.password;
+           // delete user.password;
             user.isNew = userToken.createdAt ? true : false;
             console.log(user);
             res.send(user);
@@ -209,10 +212,10 @@ router.get('/trainer', (req, res) => {
 });
 
 
-//get name and  details of user
-router.get('/trainer/:username', (req, res) => {
+//get name and  type videos of user
+router.get('/users/:type', (req, res) => {
 
-    conn.query(`SELECT * FROM trainers where username = '${userName}'`, (err, userdetails) => {
+    conn.query(`SELECT * FROM users where type = '${type}'`, (err, userdetails) => {
         if (err) {
             console.log(err);
             res.status(500).send(err);
@@ -224,24 +227,49 @@ router.get('/trainer/:username', (req, res) => {
     })
 })
 
-router.get('/', function(req, res) {
-    var code = (req.query.code) ? req.query.code : '';
-    if(!youtube.isTokenExists()){
-      if(!_.isEmpty(code)){
-        tokens = youtube.getToken(code);   
-        res.redirect('/index.html');     
-      }else{
-        var authURL = youtube.getAuthUrl();
-        res.render('index', { title: 'Express', 'authURL':authURL});
-      }	  
-    }else{
-      res.status(200).redirect('/index.html');  
-    }  
-  });
+//get videos uploaded by type
+router.get('/videos/:type', (req, res) => {
+
+    conn.query(`SELECT * FROM videos where type ='${type}'`, (err, videodetails) => {
+        if (err) {
+            console.log(err);
+            res.status(500).send(err);
+        }
+        else {
+            console.log(videodetails);
+            res.send(videodetails)
+        }
+    })
+})
+// get all videos 
+router.get('/allVideos', (req, res) => {
+
+    conn.query(`SELECT * FROM videos`, (err, rows) => {
+        if (err) {
+            res.status(500).send(err);
+           
+        } else {
+            res.send(JSON.stringify(rows));
+        }
+
+    })
+});
+
+//get product by search text bar 
+router.get('/videos/search/:text', (req, res) => {
+    const text = req.params.text;
+    conn.query(`SELECT DISTINCT title, equipment, videos.type,duration FROM videos WHERE videos.type LIKE '%${text}%' OR videos.equipment LIKE '%${text}%'`,
+     (err, videosearch) => {
+            if (err) {
+                res.status(500).send({ message: "Video doesn't exist" });
+            } else {
+                res.send(videosearch);
+            }
+        })
+});
 //user logout
 router.get('/logout', (req, res, next) => {
     res.cookie('token', '', { expires: new Date(1), path: '/' });
     console.log('logging out')
     res.send('logged out');
 });
-

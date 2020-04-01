@@ -3,11 +3,11 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: מרץ 30, 2020 בזמן 09:24 PM
+-- Generation Time: מרץ 31, 2020 בזמן 09:16 PM
 -- גרסת שרת: 10.4.11-MariaDB
 -- PHP Version: 7.4.3
 
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET SQL_MODE =:"NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
@@ -31,8 +31,8 @@ SET time_zone = "+00:00";
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `username` varchar(20) NOT NULL,
-  `brand` varchar(20) NOT NULL,
-  `video_url` varchar(250) NOT NULL,
+  `type` varchar(20) NOT NULL,
+  `url` varchar(250) NOT NULL,
   `rating` varchar(10) NOT NULL,
   `tag_workout_type` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -45,12 +45,12 @@ CREATE TABLE `users` (
 
 CREATE TABLE `videos` (
   `id` int(11) NOT NULL,
-  `brand` varchar(20) DEFAULT NULL,
-  `video_url` varchar(20) NOT NULL,
-  `youtube_image` varchar(250) DEFAULT NULL,
-  `workout_duration` varchar(11) NOT NULL,
-  `training_type` varchar(20) NOT NULL,
-  `equipment` varchar(20) NOT NULL
+  `title` varchar(40) DEFAULT NULL,
+  `equipment` varchar(20) NOT NULL,
+  `type` varchar(20) NOT NULL,
+  `duration` time(6) NOT NULL,
+  `url` varchar(100) NOT NULL,
+  `img` varchar(250) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -63,8 +63,8 @@ CREATE TABLE `videos` (
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `user_name` (`username`),
-  ADD KEY `brand` (`brand`),
-  ADD KEY `video_url` (`video_url`),
+  ADD KEY `brand` (`type`),
+  ADD KEY `video_url` (`url`),
   ADD KEY `tag_workout_type` (`tag_workout_type`),
   ADD KEY `tag_workout_type_2` (`tag_workout_type`);
 
@@ -73,9 +73,9 @@ ALTER TABLE `users`
 --
 ALTER TABLE `videos`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `video_url` (`video_url`),
+  ADD UNIQUE KEY `url` (`url`),
   ADD KEY `equipment` (`equipment`),
-  ADD KEY `training_type` (`training_type`);
+  ADD KEY `type` (`type`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -92,6 +92,23 @@ ALTER TABLE `users`
 --
 ALTER TABLE `videos`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- הגבלות לטבלאות שהוצאו
+--
+
+--
+-- הגבלות לטבלה `users`
+--
+ALTER TABLE `users`
+  ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`type`) REFERENCES `videos` (`type`),
+  ADD CONSTRAINT `users_ibfk_2` FOREIGN KEY (`url`) REFERENCES `videos` (`url`);
+
+--
+-- הגבלות לטבלה `videos`
+--
+ALTER TABLE `videos`
+  ADD CONSTRAINT `videos_ibfk_1` FOREIGN KEY (`id`) REFERENCES `users` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

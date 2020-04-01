@@ -17,7 +17,7 @@ const fileFilter = (req, files, cb) => {
 // use multer middleware
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, 'C:/Users/shain/WorkoutStar/uploads/')
+        cb(null, '../../uploads')
     },
     filename: function (req, file, cb) {
         cb(null, Date.now() + '-' + file.originalname)
