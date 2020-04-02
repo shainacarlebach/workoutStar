@@ -81,6 +81,7 @@ router.post('/videoupload', (req, res) => {
             console.log(err);
             res.status(500).send({ success: false, msg: 'video was not created' });
         } else {
+            console.log(data);
             res.cookie('tokenid', createToken({ id: req.body.id, createdAt: new Date() }), { maxAge: 86400 * 1000 });
             res.send({ success: true, redirectToUrl: '/index.html' });
         }

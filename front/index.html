@@ -1,12 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <script
+      src="https://apis.google.com/js/client:platform.js?onload=start"
+      async
+      defer
+    ></script>
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.js"
+      integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      function start() {
+        gapi.load("auth2", function() {
+          auth2 = gapi.auth2.init({
+            client_id:
+              "27295779158-sdqaicgo9l8qmlo8mr0f42um84ve8gkd.apps.googleusercontent.com"
+            // Scopes to request in addition to 'profile' and 'email'
+            //scope: 'additional_scope'
+          });
+        });
+      }
+    </script>
     <!-- Bootstrap CSS -->
     <link
       rel="stylesheet"
@@ -14,124 +30,105 @@
       integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
       crossorigin="anonymous"
     />
-
-    <title>Upload video</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css"
+    />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"
+      crossorigin="anonymous"
+    ></script>
   </head>
   <body>
-    <div class=" container-fluid ">
-      <form class=" mx-auto col-6 border m-3 p-2" id="uploadForm" enctype = "multipart/form-data" action="videoupload"
-      method= "post">
-        <h1>Video Upload</h1>
-        <div class="form-group">
-          <label for="video-url">Video ID</label>
-          <input type="text" class="form-control" id="video-url" />
-             
-          <small id="emailHelp" class="form-text "
-            >example: https://www.youtube.com/watch?v=<span class="bg-warning"
-              >C_9HNEyLa4U</span
-            ></small
+    -
+    <div id="wrapper">
+      <div
+        class="mx-auto col-6 border m-4 py-2 px-4 shadow rounded animated slideInDown"
+        id="form-wrapper"
+      >
+        <div class="text-center">
+          <button
+            id="signinButton"
+            class="btn btn-lg btn-danger shadow mx-auto my-5"
           >
+            Sign in with Google <i class="fab fa-google"></i>
+          </button>
         </div>
 
-        <div class="form-group">
-          <label for="form-check">Equipment</label>
-          <div class="form-check ">
-            <input
-              class="form-check-input"
-              type="radio"
-              name="equipment"
-              id="No"
-              value="no equipment"
-            />
-            <label class="form-check-label" for="no">No Equipment</label>
+        <div id="video-upload">
+          <div class="text-center h1 m-0">Video Upload</div>
+          <div class="form-group">
+            <label class="h5" for="video-url">Video ID</label>
+            <input type="text" class="form-control" id="video-id" />
+            <small class="form-text mt-1"
+              ><b>example:</b> https://www.youtube.com/watch?v=<span
+                class="bg-warning"
+                >dNEZKqopc2I</span
+              ></small
+            >
           </div>
-          <div class="form-check ">
-            <input
-              class="form-check-input"
-              type="radio"
-              name="equipment"
-              id="mat"
-              value="mat"
-            />
-            <label class="form-check-label" for="mat">Mat</label>
-          </div>
-          <div class="form-check ">
-            <input
-              class="form-check-input"
-              type="radio"
-              name="equipment"
-              id="dumbbell"
-              value="dumbbell"
-            />
-            <label class="form-check-label" for="dumbbell">Dumbbell</label>
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="video-type">Workout type</label>
-          <select class="form-control w-25" id="video-url">
-            <option>Yoga</option>
-            <option>Hiit</option>
-            <option>Pilates</option>
-            <option>Cardio</option>
-            <option>Strength</option>
-            <option>Toning </option>
-          </select>
-        </div>
 
-        <button type="submit" class="btn btn-secondary">Submit</button>
-      </form>
+          <div class="form-group">
+            <label class="h5" for="form-check">Equipment</label>
+            <div class="form-check ">
+              <input
+                checked
+                class="form-check-input"
+                type="radio"
+                name="equipment"
+                id="no"
+                value="No equipment"
+              />
+              <label class="form-check-label" for="no">No Equipment</label>
+            </div>
+            <div class="form-check ">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="equipment"
+                id="mat"
+                value="Mat"
+              />
+              <label class="form-check-label" for="mat">Mat</label>
+            </div>
+            <div class="form-check ">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="equipment"
+                id="dumbbell"
+                value="Dumbbell"
+              />
+              <label class="form-check-label" for="dumbbell">Dumbbell</label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="h5" for="video-type">Workout type</label>
+            <select class="form-control w-25" id="video-type">
+              <option>Yoga</option>
+              <option>Hiit</option>
+              <option>Pilates</option>
+              <option>Cardio</option>
+              <option>Strength</option>
+              <option>Toning </option>
+            </select>
+          </div>
+          <div class="text-center">
+            <button
+              onclick="getVideoDetails()"
+              id="continue"
+              class="btn btn-secondary  "
+            >
+              Continue
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="border container mx-auto text-center m-2 p-2">
-      <h3>DB Structure</h3>
-      <b> videos db : </b>videoUrl(KEY) ,userId(KEY), videoType, equipment,
-      duration
-    </div>
-    <div class="row container mx-auto my-3">
-      <button
-        class="col-sm btn btn-outline-info mx-2"
-        id="yoga"
-        onclick="getVideos(this.id)"
-      >
-        Yoga
-      </button>
-      <button
-        class="col-sm btn btn-outline-info mx-2"
-        id="hit"
-        onclick="getVideos(this.id)"
-      >
-        HIIT
-      </button>
-      <button
-        class="col-sm btn btn-outline-info mx-2"
-        id="pilates"
-        onclick="getVideos(this.id)"
-      >
-        Pilates
-      </button>
-      <button
-        class="col-sm btn btn-outline-info mx-2"
-        id="cardio"
-        onclick="getVideos(this.id)"
-      >
-        Cardio
-      </button>
-      <button
-        class="col-sm btn btn-outline-info mx-2"
-        id="toning"
-        onclick="getVideos(this.id);"
-      >
-        Toning
-      </button>
-      <button
-        class="col-sm btn btn-outline-info mx-2"
-        id="strength"
-        onclick="getVideos(this.id)"
-      >
-        Strength
-      </button>
-    </div>
-    <div class="row container mx-auto training"></div>
-    <script type="text/javascript" src="index.js"></script>
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js"
+    ></script>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script
@@ -149,5 +146,141 @@
       integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
       crossorigin="anonymous"
     ></script>
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $("#continue").prop("disabled", true);
+        $("#video-id").keyup(function() {
+          $("#continue").prop("disabled", this.value == "" ? true : false);
+        });
+        //  $('#video-upload').hide();
+      });
+    </script>
+    <script>
+      const KEY = "AIzaSyAfMe1atKlXhpOQjAoKJePz3JiGyz4igbQ";
+      const BASE_URL = "https://www.googleapis.com/youtube/v3";
+      var videoObj = {};
+      const goBack = () => {
+        $("#error").remove();
+        $("#loader").remove();
+        $("#form-wrapper").show();
+      };
+      const getVideoDetails = () => {
+        const videoId = $("#video-id").val();
+        const videoUrl = `https://www.youtube.com/watch?v=${videoId}`;
+        const type = $("#video-type").val();
+        const equipment = $(
+          "input[name=equipment]:checked",
+          "#video-upload"
+        ).val();
+        videoObj = {
+          ...videoObj,
+          videoId,
+          equipment,
+          type
+        };
+        const loader = `<div id='loader'class='text-center m-5'><div class="spinner-border"></div></div>`;
+        $("#form-wrapper").append(loader);
+        const part = "snippet,statistics,contentDetails";
+        fetch(`${BASE_URL}/videos?key=${KEY}&part=${part}&id=${videoId}`)
+          .then(res => {
+            return res.json();
+          })
+          .then(data => {
+            if (data.items.length === 0) {
+              $("#form-wrapper").hide();
+              $("#wrapper").append(
+                `<div id='error' class='text-center m-5 border shadow col-6 mx-auto animated slideInDown'> Oops, <b>${videoId}</b> isn't valid youtube ID <br><button class='btn btn-danger m-3' onclick='goBack()'>Go Back</button></div>`
+              );
+            }
+            let { title, thumbnails } = data.items[0].snippet;
+            let duration = data.items[0].contentDetails.duration;
+            const { hours, minutes, seconds } = moment.duration(
+              duration,
+              "m"
+            )._data;
+            duration = `${("0" + hours).slice(-2)}:${("0" + minutes).slice(
+              -2
+            )}:${("0" + seconds).slice(-2)}`;
+            $("#wrapper").html(
+              ` <div
+      class="mx-auto col-6 border m-2 py-2 px-4 shadow rounded animated slideInLeft">
+      <div class='text-center'> Hey, we got some details about your video from youtube, you can add them if you want to.</div>
+      <div class="form-group"><label class="h5 mt-1" for="video-url">Video Title</label>
+      <input type="text" class="form-control" id="video-title" />
+      <div>
+      <div class="form-group"><label class="h5 mt-1" for="video-duration">Video Duration</label>
+      <input type="text" class="form-control" id="video-duration" />
+      <div>
+      <div class="form-group"><label class="h5 mt-1" for="video-url">Video Url</label>
+      <input type="text" class="form-control" id="video-url" />
+      <div>
+      <div class='text-center mt-3'> <img id='video-img' class=' rounded shadow' alt='video Image'/><br><button class='mt-3 btn btn-primary' onclick='uploadVideo()'>Upload Video </button></div></div>
+      `
+            );
+
+            $("#video-title").val(title);
+            $("#video-duration").val(duration);
+            $("#video-url").val(videoUrl);
+            $("#video-img").attr("src", thumbnails.medium.url);
+          });
+      };
+      const uploadVideo = () => {
+        const title = $("#video-title").val();
+        const duration = $("#video-duration").val();
+        const url = $("#video-url").val();
+        const img = $("#video-img").attr("src");
+        videoObj = {
+          ...videoObj,
+          title,
+          duration,
+          url,
+          img
+        };
+        //console.log(videoObj);
+           upload=()=>{
+           $.ajax({
+          type:'POST',
+          dataType: "json", 
+          url: "/videoupload",
+          cache: false,
+          data:{videoObj: videoObj},
+          success: function(response) {
+            successCallback(console.log(JSON.parse(response)));
+          },
+          error: function (jqXHR, exception) {
+					var msg = '';
+					if (jqXHR.status === 0) {
+						msg = ' could not connect to server!.'
+					}
+        }});
+      }
+    };
+      
+      $("#signinButton").click(function() {
+        // signInCallback defined in step 6.
+
+        auth2.grantOfflineAccess().then(signInCallback);
+      });
+
+      function signInCallback(authResult) {
+        if (authResult["code"]) {
+          // Hide the sign-in button now that the user is authorized, for example:
+          $("#signinButton").attr("style", "display: none");
+          $("#video-upload").show();
+
+          const userName = auth2.currentUser
+            .get()
+            .getBasicProfile()
+            .getName();
+
+          const userId = auth2.currentUser.get().getId();
+          videoObj = {
+            ...videoObj,
+            userId,
+            userName
+          };
+        }
+      }
+    </script>
   </body>
 </html>
