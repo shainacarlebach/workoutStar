@@ -15,8 +15,9 @@ const conn = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     database: 'workoutstar',
-    multipleStatements: true
-});
+    multipleStatements: true,
+    port:3306
+    });
 
 conn.connect((err) => {
     if (err) {
@@ -45,6 +46,7 @@ router.use(bodyParser.json());
 //router.use(expressValidator());
 router.use(upload);
 
+
 //check if url exists in db
 router.post('/videos/url', (req, res, next) => {
     //prevent sql injection 
@@ -66,22 +68,23 @@ router.post('/videos/url', (req, res, next) => {
 
 //register new video , put payload in cookie
 router.post('/videoupload', (req, res) => {
-    var post = {
-        id: req.body.id,
-        title: req.body.title,
+    var post ={ 
+        videoId: req.body.videoId,
         equipment: req.body.equipment,
         type: req.body.type,
+        title: req.body.title,
         duration: req.body.duration,
         url: req.body.url,
         img: req.body.img
     }
+  
            //prevent sql injection 
-    conn.query(`INSERT INTO videos SET ?`, post, (err, data) => {
+    conn.query(`INSERT INTO videos SET ?`,post, (err, data) => {
         if (err) {
             console.log(err);
             res.status(500).send({ success: false, msg: 'video was not created' });
         } else {
-            console.log(data);
+            
             res.cookie('tokenid', createToken({ id: req.body.id, createdAt: new Date() }), { maxAge: 86400 * 1000 });
             res.send({ success: true, redirectToUrl: '/index.html' });
         }

@@ -1,6 +1,6 @@
 <html>
   <head>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
     <script
       src="https://apis.google.com/js/client:platform.js?onload=start"
       async
@@ -40,7 +40,7 @@
     ></script>
   </head>
   <body>
-    -
+    
     <div id="wrapper">
       <div
         class="mx-auto col-6 border m-4 py-2 px-4 shadow rounded animated slideInDown"
@@ -59,7 +59,7 @@
           <div class="text-center h1 m-0">Video Upload</div>
           <div class="form-group">
             <label class="h5" for="video-url">Video ID</label>
-            <input type="text" class="form-control" id="video-id" />
+            <input type="text" class="form-control" id="video-id"name ="video-id" />
             <small class="form-text mt-1"
               ><b>example:</b> https://www.youtube.com/watch?v=<span
                 class="bg-warning"
@@ -104,13 +104,13 @@
           </div>
           <div class="form-group">
             <label class="h5" for="video-type">Workout type</label>
-            <select class="form-control w-25" id="video-type">
+            <select class="form-control w-25" id="video-type" name="type">
               <option>Yoga</option>
-              <option>Hiit</option>
-              <option>Pilates</option>
-              <option>Cardio</option>
-              <option>Strength</option>
-              <option>Toning </option>
+              <option >Hiit</option>
+              <option >Pilates</option>
+              <option >Cardio</option>
+              <option >Strength</option>
+              <option >Toning </option>
             </select>
           </div>
           <div class="text-center">
@@ -132,7 +132,7 @@
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script
-      src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+      src="https://code.jquery.com/jquery-3.4.1.min.js"
       integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
       crossorigin="anonymous"
     ></script>
@@ -225,7 +225,9 @@
           });
       };
       const uploadVideo = () => {
+        const videoId = $("#video-id").val();
         const title = $("#video-title").val();
+        const type = $("#video-type").val();
         const duration = $("#video-duration").val();
         const url = $("#video-url").val();
         const img = $("#video-img").attr("src");
@@ -236,25 +238,13 @@
           url,
           img
         };
-        //console.log(videoObj);
-           upload=()=>{
-           $.ajax({
-          type:'POST',
-          dataType: "json", 
-          url: "/videoupload",
-          cache: false,
-          data:{videoObj: videoObj},
-          success: function(response) {
-            successCallback(console.log(JSON.parse(response)));
-          },
-          error: function (jqXHR, exception) {
-					var msg = '';
-					if (jqXHR.status === 0) {
-						msg = ' could not connect to server!.'
-					}
-        }});
-      }
-    };
+        console.log(videoObj);
+       
+        $.post('/videoupload',videoObj,function(response) {
+            console.log(JSON.parse(response))
+        } , 'application/json',)
+      };
+     
       
       $("#signinButton").click(function() {
         // signInCallback defined in step 6.
