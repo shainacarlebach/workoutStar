@@ -74,8 +74,10 @@ router.post('/videoupload', (req, res) => {
         type: req.body.type,
         title: req.body.title,
         duration: req.body.duration,
+        length: req.body.length,
         url: req.body.url,
-        img: req.body.img
+        img: req.body.img,
+        userID:req.body.userId
     }
   
            //prevent sql injection 
@@ -95,12 +97,9 @@ router.post('/videoupload', (req, res) => {
 //register new user , put payload in cookie
 router.post('/user', (req, res) => {
     var post = {
-        id: req.body.id,
-        username: req.body.username,
-        type:req.body.type,
-        url:req.body.url,
-        rating: req.body.rating,
-        tag_workout_type: req.body.tag_workout_type
+        id: req.body.userId,
+        username: req.body.userName,
+        email:req.body.userEmail
            }
            //prevent sql injection 
     conn.query(`INSERT INTO users SET ?`, post, (err, data) => {

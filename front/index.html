@@ -1,208 +1,167 @@
-<html>
-  <head>
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-    <script
-      src="https://apis.google.com/js/client:platform.js?onload=start"
-      async
-      defer
-    ></script>
-    <script
-      src="https://code.jquery.com/jquery-3.4.1.js"
-      integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
-      crossorigin="anonymous"
-    ></script>
-    <script>
-      function start() {
-        gapi.load("auth2", function() {
-          auth2 = gapi.auth2.init({
-            client_id:
-              "27295779158-sdqaicgo9l8qmlo8mr0f42um84ve8gkd.apps.googleusercontent.com"
-            // Scopes to request in addition to 'profile' and 'email'
-            //scope: 'additional_scope'
-          });
+<!doctype html>
+<html lang="en">
+
+<head>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+  <script src="https://apis.google.com/js/client:platform.js?onload=start" async defer></script>
+  <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+    crossorigin="anonymous"></script>
+  <script>
+    function start() {
+      gapi.load("auth2", function () {
+        auth2 = gapi.auth2.init({
+          client_id:
+            "27295779158-sdqaicgo9l8qmlo8mr0f42um84ve8gkd.apps.googleusercontent.com"
+          // Scopes to request in addition to 'profile' and 'email'
+          //scope: 'additional_scope'
         });
-      }
-    </script>
-    <!-- Bootstrap CSS -->
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
-      crossorigin="anonymous"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css"
-    />
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"
-      crossorigin="anonymous"
-    ></script>
-  </head>
-  <body>
-    
-    <div id="wrapper">
-      <div
-        class="mx-auto col-6 border m-4 py-2 px-4 shadow rounded animated slideInDown"
-        id="form-wrapper"
-      >
-        <div class="text-center">
-          <button
-            id="signinButton"
-            class="btn btn-lg btn-danger shadow mx-auto my-5"
-          >
-            Sign in with Google <i class="fab fa-google"></i>
-          </button>
+      });
+    }
+  </script>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"
+    crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+  <div id="wrapper">
+    <div class="mx-auto col-6 border m-4 py-2 px-4 shadow rounded animated slideInDown" id="form-wrapper">
+      <div class="text-center">
+        <button id="signinButton" class="btn btn-lg btn-danger shadow mx-auto my-5">
+          Sign in with Google <i class="fab fa-google"></i>
+        </button>
+      </div>
+
+      <div id="video-upload">
+        <div class="text-center h1 m-0">Video Upload</div>
+        <div class="form-group">
+          <label class="h5" for="video-url">Video ID</label>
+          <input type="text" class="form-control" id="video-id" name="video-id" />
+          <small class="form-text mt-1"><b>example:</b> https://www.youtube.com/watch?v=<span
+              class="bg-warning">dNEZKqopc2I</span></small>
         </div>
 
-        <div id="video-upload">
-          <div class="text-center h1 m-0">Video Upload</div>
-          <div class="form-group">
-            <label class="h5" for="video-url">Video ID</label>
-            <input type="text" class="form-control" id="video-id"name ="video-id" />
-            <small class="form-text mt-1"
-              ><b>example:</b> https://www.youtube.com/watch?v=<span
-                class="bg-warning"
-                >dNEZKqopc2I</span
-              ></small
-            >
+        <div class="form-group">
+          <label class="h5" for="form-check">Equipment</label>
+          <div class="form-check ">
+            <input checked class="form-check-input" type="radio" name="equipment" id="no" value="No equipment" />
+            <label class="form-check-label" for="no">No Equipment</label>
           </div>
-
-          <div class="form-group">
-            <label class="h5" for="form-check">Equipment</label>
-            <div class="form-check ">
-              <input
-                checked
-                class="form-check-input"
-                type="radio"
-                name="equipment"
-                id="no"
-                value="No equipment"
-              />
-              <label class="form-check-label" for="no">No Equipment</label>
-            </div>
-            <div class="form-check ">
-              <input
-                class="form-check-input"
-                type="radio"
-                name="equipment"
-                id="mat"
-                value="Mat"
-              />
-              <label class="form-check-label" for="mat">Mat</label>
-            </div>
-            <div class="form-check ">
-              <input
-                class="form-check-input"
-                type="radio"
-                name="equipment"
-                id="dumbbell"
-                value="Dumbbell"
-              />
-              <label class="form-check-label" for="dumbbell">Dumbbell</label>
-            </div>
+          <div class="form-check ">
+            <input class="form-check-input" type="radio" name="equipment" id="mat" value="Mat" />
+            <label class="form-check-label" for="mat">Mat</label>
           </div>
-          <div class="form-group">
-            <label class="h5" for="video-type">Workout type</label>
-            <select class="form-control w-25" id="video-type" name="type">
-              <option>Yoga</option>
-              <option >Hiit</option>
-              <option >Pilates</option>
-              <option >Cardio</option>
-              <option >Strength</option>
-              <option >Toning </option>
-            </select>
+          <div class="form-check ">
+            <input class="form-check-input" type="radio" name="equipment" id="dumbbell" value="Dumbbell" />
+            <label class="form-check-label" for="dumbbell">Dumbbell</label>
           </div>
-          <div class="text-center">
-            <button
-              onclick="getVideoDetails()"
-              id="continue"
-              class="btn btn-secondary  "
-            >
-              Continue
-            </button>
-          </div>
+        </div>
+        <div class="form-group">
+          <label class="h5" for="video-type">Workout type</label>
+          <select class="form-control w-25" id="video-type" name="type">
+            <option>Yoga</option>
+            <option>Hiit</option>
+            <option>Pilates</option>
+            <option>Cardio</option>
+            <option>Strength</option>
+            <option>Toning </option>
+          </select>
+        </div>
+        <div class="text-center">
+          <button onclick="getVideoDetails()" id="continue" class="btn btn-secondary  ">
+            Continue
+          </button>
         </div>
       </div>
     </div>
-    <script
-      type="text/javascript"
-      src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js"
-    ></script>
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script
-      src="https://code.jquery.com/jquery-3.4.1.min.js"
-      integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-      integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-      crossorigin="anonymous"
-    ></script>
-    <script type="text/javascript">
-      $(document).ready(function() {
-        $("#continue").prop("disabled", true);
-        $("#video-id").keyup(function() {
-          $("#continue").prop("disabled", this.value == "" ? true : false);
-        });
-        //  $('#video-upload').hide();
+  </div>
+  <script type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js"></script>
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+    crossorigin="anonymous"></script>
+  <script type="text/javascript">
+    $(document).ready(function () {
+      $("#continue").prop("disabled", true);
+      $("#video-id").keyup(function () {
+        $("#continue").prop("disabled", this.value == "" ? true : false);
       });
-    </script>
-    <script>
-      const KEY = "AIzaSyAfMe1atKlXhpOQjAoKJePz3JiGyz4igbQ";
-      const BASE_URL = "https://www.googleapis.com/youtube/v3";
-      var videoObj = {};
-      const goBack = () => {
-        $("#error").remove();
-        $("#loader").remove();
-        $("#form-wrapper").show();
+      //  $('#video-upload').hide();
+    });
+  </script>
+  <script>
+    const KEY = "AIzaSyAfMe1atKlXhpOQjAoKJePz3JiGyz4igbQ";
+    const BASE_URL = "https://www.googleapis.com/youtube/v3";
+    var videoObj = {};
+    const goBack = () => {
+      $("#error").remove();
+      $("#loader").remove();
+      $("#form-wrapper").show();
+    };
+    const getVideoDetails = () => {
+      const videoId = $("#video-id").val();
+      const videoUrl = `https://www.youtube.com/watch?v=${videoId}`;
+      const type = $("#video-type").val();
+      const equipment = $(
+        "input[name=equipment]:checked",
+        "#video-upload"
+      ).val();
+      videoObj = {
+        ...videoObj,
+        videoId,
+        equipment,
+        type
       };
-      const getVideoDetails = () => {
-        const videoId = $("#video-id").val();
-        const videoUrl = `https://www.youtube.com/watch?v=${videoId}`;
-        const type = $("#video-type").val();
-        const equipment = $(
-          "input[name=equipment]:checked",
-          "#video-upload"
-        ).val();
-        videoObj = {
-          ...videoObj,
-          videoId,
-          equipment,
-          type
-        };
-        const loader = `<div id='loader'class='text-center m-5'><div class="spinner-border"></div></div>`;
-        $("#form-wrapper").append(loader);
-        const part = "snippet,statistics,contentDetails";
-        fetch(`${BASE_URL}/videos?key=${KEY}&part=${part}&id=${videoId}`)
-          .then(res => {
-            return res.json();
-          })
-          .then(data => {
-            if (data.items.length === 0) {
-              $("#form-wrapper").hide();
-              $("#wrapper").append(
-                `<div id='error' class='text-center m-5 border shadow col-6 mx-auto animated slideInDown'> Oops, <b>${videoId}</b> isn't valid youtube ID <br><button class='btn btn-danger m-3' onclick='goBack()'>Go Back</button></div>`
-              );
+      const loader = `<div id='loader'class='text-center m-5'><div class="spinner-border"></div></div>`;
+      $("#form-wrapper").append(loader);
+      const part = "snippet,statistics,contentDetails";
+      fetch(`${BASE_URL}/videos?key=${KEY}&part=${part}&id=${videoId}`)
+        .then(res => {
+          return res.json();
+        })
+        .then(data => {
+          if (data.items.length === 0) {
+            $("#form-wrapper").hide();
+            $("#wrapper").append(
+              `<div id='error' class='text-center m-5 border shadow col-6 mx-auto animated slideInDown'> Oops, <b>${videoId}</b> isn't valid youtube ID <br><button class='btn btn-danger m-3' onclick='goBack()'>Go Back</button></div>`
+            );
+          }
+          let { title, thumbnails } = data.items[0].snippet;
+          let duration = data.items[0].contentDetails.duration;
+          let length = "L";
+          const { hours, minutes, seconds } = moment.duration(
+            duration,
+            "m"
+          )._data;
+          duration = `${("0" + hours).slice(-2)}:${("0" + minutes).slice(
+            -2
+          )}:${("0" + seconds).slice(-2)}`;
+          if (hours === 0) {
+            if (minutes <= 30) {
+              length = "S";
+            } else {
+              length = "M";
             }
-            let { title, thumbnails } = data.items[0].snippet;
-            let duration = data.items[0].contentDetails.duration;
-            const { hours, minutes, seconds } = moment.duration(
-              duration,
-              "m"
-            )._data;
-            duration = `${("0" + hours).slice(-2)}:${("0" + minutes).slice(
-              -2
-            )}:${("0" + seconds).slice(-2)}`;
-            $("#wrapper").html(
-              ` <div
+          }
+          videoObj = {
+            ...videoObj,
+            length,
+            duration
+          }
+          $("#wrapper").html(
+            ` <div
       class="mx-auto col-6 border m-2 py-2 px-4 shadow rounded animated slideInLeft">
       <div class='text-center'> Hey, we got some details about your video from youtube, you can add them if you want to.</div>
       <div class="form-group"><label class="h5 mt-1" for="video-url">Video Title</label>
@@ -216,61 +175,73 @@
       <div>
       <div class='text-center mt-3'> <img id='video-img' class=' rounded shadow' alt='video Image'/><br><button class='mt-3 btn btn-primary' onclick='uploadVideo()'>Upload Video </button></div></div>
       `
-            );
+          );
 
-            $("#video-title").val(title);
-            $("#video-duration").val(duration);
-            $("#video-url").val(videoUrl);
-            $("#video-img").attr("src", thumbnails.medium.url);
-          });
+          $("#video-title").val(title);
+          $("#video-duration").val(duration);
+          $("#video-url").val(videoUrl);
+          $("#video-img").attr("src", thumbnails.medium.url);
+        });
+    };
+    const uploadVideo = () => {
+      const videoId = $("#video-id").val();
+      const title = $("#video-title").val();
+      const type = $("#video-type").val();
+      const duration = $("#video-duration").val();
+      const url = $("#video-url").val();
+      const img = $("#video-img").attr("src");
+      videoObj = {
+        ...videoObj,
+        title,
+        duration,
+        url,
+        img
       };
-      const uploadVideo = () => {
-        const videoId = $("#video-id").val();
-        const title = $("#video-title").val();
-        const type = $("#video-type").val();
-        const duration = $("#video-duration").val();
-        const url = $("#video-url").val();
-        const img = $("#video-img").attr("src");
+      console.log(videoObj);
+
+      $.post('/videoupload', videoObj, function (response) {
+        console.log(JSON.parse(response))
+      }, 'application/json')
+    };
+
+
+    $("#signinButton").click(function () {
+      // signInCallback defined in step 6.
+
+      auth2.grantOfflineAccess().then(signInCallback);
+    });
+
+    function signInCallback(authResult) {
+      if (authResult["code"]) {
+        // Hide the sign-in button now that the user is authorized, for example:
+        $("#signinButton").attr("style", "display: none");
+        $("#video-upload").show();
+
+        const userName = auth2.currentUser
+          .get()
+          .getBasicProfile()
+          .getName();
+
+        const userId = auth2.currentUser.get().getId();
+        const userEmail = auth2.currentUser
+          .get()
+          .getBasicProfile()
+          .getEmail()
+
+        const userObj = {
+          userId,
+          userName,
+          userEmail
+        }
         videoObj = {
           ...videoObj,
-          title,
-          duration,
-          url,
-          img
+          userId,
         };
-        console.log(videoObj);
-       
-        $.post('/videoupload',videoObj,function(response) {
-            console.log(JSON.parse(response))
-        } , 'application/json',)
-      };
-     
-      
-      $("#signinButton").click(function() {
-        // signInCallback defined in step 6.
-
-        auth2.grantOfflineAccess().then(signInCallback);
-      });
-
-      function signInCallback(authResult) {
-        if (authResult["code"]) {
-          // Hide the sign-in button now that the user is authorized, for example:
-          $("#signinButton").attr("style", "display: none");
-          $("#video-upload").show();
-
-          const userName = auth2.currentUser
-            .get()
-            .getBasicProfile()
-            .getName();
-
-          const userId = auth2.currentUser.get().getId();
-          videoObj = {
-            ...videoObj,
-            userId,
-            userName
-          };
-        }
+        $.post('/user', userObj, function (response) {
+          console.log(JSON.parse(response))
+        }, 'application/json')
       }
-    </script>
-  </body>
+    }
+  </script>
+</body>
 </html>

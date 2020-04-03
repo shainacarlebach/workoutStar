@@ -3,11 +3,10 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: מרץ 31, 2020 בזמן 09:16 PM
+-- Generation Time: אפריל 03, 2020 בזמן 01:40 PM
 -- גרסת שרת: 10.4.11-MariaDB
 -- PHP Version: 7.4.3
 
-USE workoutstar;
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
 START TRANSACTION;
@@ -30,12 +29,9 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `users` (
-  `id` int(11) NOT NULL,
+  `id` varchar(11) NOT NULL,
   `username` varchar(20) NOT NULL,
-  `type` varchar(20) NOT NULL,
-  `url` varchar(250) NOT NULL,
-  `rating` varchar(10) NOT NULL,
-  `tag_workout_type` varchar(20) NOT NULL
+  `email` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -45,14 +41,23 @@ CREATE TABLE `users` (
 --
 
 CREATE TABLE `videos` (
-  `id` int(11) NOT NULL,
-  `title` varchar(40) DEFAULT NULL,
+  `videoId` varchar(20) NOT NULL,
   `equipment` varchar(20) NOT NULL,
   `type` varchar(20) NOT NULL,
+  `title` varchar(20) NOT NULL,
   `duration` time(6) NOT NULL,
+  `length` varchar(11) NOT NULL,
   `url` varchar(100) NOT NULL,
-  `img` varchar(250) NOT NULL
+  `img` varchar(250) NOT NULL,
+  `userID` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- הוצאת מידע עבור טבלה `videos`
+--
+
+INSERT INTO `videos` (`videoId`, `equipment`, `type`, `title`, `duration`, `length`, `url`, `img`, `userID`) VALUES
+('uUWxteM9xUU', 'No equipment', 'Yoga', '36 minute Diet Dance', '00:37:17.000000', '', 'https://www.youtube.com/watch?v=uUWxteM9xUU', 'https://i.ytimg.com/vi/uUWxteM9xUU/mqdefault.jpg', '');
 
 --
 -- Indexes for dumped tables
@@ -63,36 +68,19 @@ CREATE TABLE `videos` (
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `user_name` (`username`),
-  ADD KEY `brand` (`type`),
-  ADD KEY `video_url` (`url`),
-  ADD KEY `tag_workout_type` (`tag_workout_type`),
-  ADD KEY `tag_workout_type_2` (`tag_workout_type`);
+  ADD UNIQUE KEY `user_name` (`username`);
 
 --
 -- אינדקסים לטבלה `videos`
 --
 ALTER TABLE `videos`
-  ADD PRIMARY KEY (`id`),
+  ADD PRIMARY KEY (`videoId`),
   ADD UNIQUE KEY `url` (`url`),
+  ADD UNIQUE KEY `userID` (`userID`),
   ADD KEY `equipment` (`equipment`),
-  ADD KEY `type` (`type`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `users`
---
-ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `videos`
---
-ALTER TABLE `videos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  ADD KEY `type` (`type`),
+  ADD KEY `title` (`title`),
+  ADD KEY `length` (`length`);
 
 --
 -- הגבלות לטבלאות שהוצאו
@@ -102,14 +90,7 @@ ALTER TABLE `videos`
 -- הגבלות לטבלה `users`
 --
 ALTER TABLE `users`
-  ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`type`) REFERENCES `videos` (`type`),
-  ADD CONSTRAINT `users_ibfk_2` FOREIGN KEY (`url`) REFERENCES `videos` (`url`);
-
---
--- הגבלות לטבלה `videos`
---
-ALTER TABLE `videos`
-  ADD CONSTRAINT `videos_ibfk_1` FOREIGN KEY (`id`) REFERENCES `users` (`id`);
+  ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`id`) REFERENCES `videos` (`videoId`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

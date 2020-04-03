@@ -13,7 +13,7 @@ const app = express();
 app.use(express.json());
 const root = path.join(__dirname,'../front');
 var corsOptions ={
-  origin:'http://localhost:8080',
+  origin:'http://localhost:3000',
      credentials: true
 };
 
@@ -37,6 +37,6 @@ app.use(login.router);
      res.sendFile('index.html', { root })
  });
 
-app.listen(8080,() => {
-    console.log('8080 is ready')
+app.listen(3000,() => {
+    console.log('3000 is ready')
 });
